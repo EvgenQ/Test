@@ -39,9 +39,9 @@ public class Role implements GrantedAuthority {
         users.remove(user);
     }
 
-    public String getRoleName() {
-        return roleName;
-    }
+//    public String getRoleName() {
+//        return roleName;
+//    }
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
@@ -55,9 +55,10 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
+    @JsonProperty("roleName")
     @Override
     public String getAuthority() {
-        return getRoleName();
+        return roleName;
     }
 
     public Set<User> getUsers() {

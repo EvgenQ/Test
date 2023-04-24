@@ -1,21 +1,25 @@
 getInfoAboutAuthUser();
 
-async function getInfoAboutAuthUser() {
-    await fetch("http://localhost:8080/api/v1/InfoAboutAuthUser", {
+function getInfoAboutAuthUser() {
+    fetch("http://localhost:8080/api/v1/InfoAboutAuthUser", {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
         }
     }).then(response => response.json())
         .then(myUser => {
+
             let labelEmail = document.getElementById("infoUserEmail");
             let labelRoles = document.getElementById("infoUserRoles");
+
             labelEmail.textContent = myUser.email;
 
             let userRoles = "";
-            for (let i = 0; i < myUser.authorities.length; i++) {
-                userRoles += myUser.authorities[i].authority.substring(5) + " ";
+
+            for (let i = 0; i < myUser.roles.length; i++) {
+                userRoles += myUser.roles[i].roleName.substring(5) + " ";
             }
+
             labelRoles.textContent = userRoles;
 
 

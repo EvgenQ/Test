@@ -33,7 +33,7 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @JsonIgnore
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
@@ -54,11 +54,12 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles
                 .stream()
-                .map((Role role) -> new SimpleGrantedAuthority(role.getRoleName()))
+                .map((Role role) -> new SimpleGrantedAuthority(role.getAuthority()))
                 .collect(Collectors.toSet());
     }
 
@@ -140,10 +141,11 @@ public class User implements UserDetails {
         return roles;
     }
 
+    @JsonIgnore
     public String getRolesToString() {
         StringBuilder allRoles = new StringBuilder();
         for (Role role : roles) {
-            allRoles.append(role.getRoleName().replaceAll("ROLE_","")).append(" ");
+            allRoles.append(role.getAuthority().replaceAll("ROLE_","")).append(" ");
         }
 
         return allRoles.toString();
